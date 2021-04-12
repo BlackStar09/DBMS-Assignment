@@ -15,14 +15,16 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Homescreen h =  new Homescreen();
+        HS1 h1=new HS1();
+        h1.setVisible(true);
+        /*Homescreen h =  new Homescreen();
         h.setVisible(true);
         Students s =  new Students();
         s.setVisible(true);
         Teachers t =  new Teachers();
         t.setVisible(true);
         Admin a =  new Admin();
-        a.setVisible(true);
+        a.setVisible(true);*/
     }
     
 }
