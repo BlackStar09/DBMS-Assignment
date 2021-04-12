@@ -9,11 +9,11 @@ DBSProj/Admin.java
 DBSProj/Teachers.java
  DBSProj.Teachers
  DBSProj.Teachers$1
-DBSProj/Main.java
- DBSProj.Main
 DBSProj/Students.java
  DBSProj.Students
  DBSProj.Students$1
+DBSProj/Main.java
+ DBSProj.Main
 DBSProj/HS1.java
  DBSProj.HS1
  DBSProj.HS1$1
