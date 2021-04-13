@@ -14,8 +14,10 @@ public class Homescreen extends javax.swing.JFrame {
     /**
      * Creates new form HomeScreen
      */
-    public Homescreen() {
+    String token;
+    public Homescreen(String e) {
         initComponents();
+        token=e;
     }
 
     /**
@@ -131,9 +133,23 @@ public class Homescreen extends javax.swing.JFrame {
         String user = jTextField2.getText();
         String pwd = jTextField3.getText();
         database d = new database();
-        if(d.checkLogin(user, pwd, "S")==true){
-            Students s = new Students();
-            s.setVisible(true);
+        if(token=="S"){
+            if(d.checkLogin(user, pwd, token)==true){
+                Students s = new Students();
+                s.setVisible(true);
+            }
+        }
+        else if(token=="E"){
+            if(d.checkLogin(user, pwd, token)==true){
+                Teachers s = new Teachers();
+                s.setVisible(true);
+            }
+        }
+        else if(token=="A"){
+            if(d.checkLogin(user, pwd, token)==true){
+                Admin s = new Admin();
+                s.setVisible(true);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -170,7 +186,7 @@ public class Homescreen extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Homescreen().setVisible(true);
+                new Homescreen("A").setVisible(true);
             }
         });
     }
