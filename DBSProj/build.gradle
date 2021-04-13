@@ -11,4 +11,5 @@ repositories {
 
 dependencies {
     testImplementation     'junit:junit:4.13'
+    compile files('C:/Users/sanath/Documents/Projects/DBMS-Assignment/DBSProj/src/main/java/deps/mysql-connector-java-8.0.22.jar')
 }

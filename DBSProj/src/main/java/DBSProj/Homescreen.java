@@ -128,6 +128,13 @@ public class Homescreen extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String user = jTextField2.getText();
+        String pwd = jTextField3.getText();
+        database d = new database();
+        if(d.checkLogin(user, pwd, "S")==true){
+            Students s = new Students();
+            s.setVisible(true);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

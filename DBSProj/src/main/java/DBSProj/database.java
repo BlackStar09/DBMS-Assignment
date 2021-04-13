@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author sanath
  */
-/*
+
 public class database {
     Connection con;
     PreparedStatement pst;
@@ -57,7 +57,7 @@ public class database {
             pst.setString(1, uname);
             pst.setString(2, pwd);
             rs = pst.executeQuery();
-            con.close();
+            //con.close();
             if(rs.next())
                 return true;
             else
@@ -65,7 +65,7 @@ public class database {
         }catch(Exception e){
             System.out.println("Error while validating" + e);
             try{
-            con.close();
+            //con.close();
             }catch(Exception e1){
                 System.out.println("Exception encountered while closing connection - " + e1);
                 return false;
@@ -187,12 +187,16 @@ public class database {
                     stud.s_id = rs.getInt("s_id");
                     stud.s_name = rs.getString("s_name");
                     stud.s_role = rs.getString("s_role");
-                    stud.std = rs.getString("std");
-                    stud.fee_left = rs.getString("fee_left");
+                    stud.std = rs.getInt("std");
+                    stud.fee_left = rs.getInt("fee_left");
                     stud.fee_paid = rs.getInt("fee_paid");
+                    students.add(stud);
                 }
             }
+        }catch (Exception e){
+            System.out.println("Exception encountered - " + e);
+            return null;
         }
+        return students;
     }
 }
-*/
