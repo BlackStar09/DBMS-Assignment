@@ -12,6 +12,7 @@ import java.util.List;
  *
  * @author sanath
  */
+/*
 public class database {
     Connection con;
     PreparedStatement pst;
@@ -194,3 +195,4 @@ public class database {
         }
     }
 }
+*/

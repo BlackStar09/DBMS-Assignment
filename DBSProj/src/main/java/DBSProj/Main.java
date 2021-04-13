@@ -17,14 +17,14 @@ public class Main {
     public static void main(String[] args) {
         HS1 h1=new HS1();
         h1.setVisible(true);
-        /*Homescreen h =  new Homescreen();
+        Homescreen h =  new Homescreen();
         h.setVisible(true);
         Students s =  new Students();
         s.setVisible(true);
         Teachers t =  new Teachers();
         t.setVisible(true);
         Admin a =  new Admin();
-        a.setVisible(true);*/
+        a.setVisible(true);
     }
     
 }
