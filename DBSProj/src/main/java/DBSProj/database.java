@@ -153,6 +153,63 @@ public class database {
             return false;
         }
     }
+    public Boolean addEmployee(int emp_id, String emp_name, int esalary, boolean esal_paid, int d_id){
+        try{
+            pst = con.prepareStatement("insert into employee values(emp_id=?, emp_name = ?, esalary=?, esal_paid=?, d_id=?)");
+            pst.setString(1, String.valueOf(emp_id));
+            pst.setString(2, emp_name);
+            pst.setString(3, String.valueOf(esalary));
+            if(esal_paid == true)
+                pst.setString(4, String.valueOf(1));
+            else
+                pst.setString(4, String.valueOf(0));
+            pst.setString(5, String.valueOf(d_id));
+            pst.executeUpdate();
+            con.close();
+            return true;
+        }
+        catch(Exception e){
+            try{
+            System.out.println("Exception Encountered - " + e);
+            }catch(Exception e1){
+                System.out.println("Exception Encountered while closing connection - " + e1);
+            }
+            return false;
+        }
+    }
+     public Boolean AssignGrade(int s_id, int c_id, int year, int marks ){
+       try{
+           pst = con.prepareStatement("insert into MarkList values(s_id=?, c_id=?, year=?, marks=?, grade=?)");
+           pst.setString(1, String.valueOf(s_id));
+           pst.setString(2, String.valueOf(c_id));
+           pst.setString(3, String.valueOf(year));
+           pst.setString(4, String.valueOf(marks));
+           if((marks<=100) &&(marks>=91))
+                pst.setString(5, "A");
+           else if((marks<=90) &&(marks>=81))
+                pst.setString(5, "B");
+           else if ((marks<=80) &&(marks>=71))
+                pst.setString(5, "C");
+           else if ((marks<=70) &&(marks>=61))
+                pst.setString(5, "D");
+           else if ((marks<=60) &&(marks>=51))
+                pst.setString(5, "E");
+           else 
+                pst.setString(5, "NC");
+           pst.executeUpdate();
+           con.close();
+           return true;
+       }catch (Exception e){
+           System.out.println("Exception Encountered" + e);
+           try{
+            con.close();
+           }catch (Exception e1){
+               System.out.println("Exception Encountered while closing connection - " + e1);
+               return false;
+           }
+           return false;
+       }
+    }
     public List<courses> courseList() throws SQLException{
         List<courses> courser = new ArrayList<courses>();
         try{
@@ -175,7 +232,7 @@ public class database {
         }
         return courser;
     }
-    public List<student> studentList() throws SQLException{
+ /*   public List<student> studentList() throws SQLException{
         List<student> students = new ArrayList<student>();
         try{
             pst = con.prepareStatement("select * from student");
@@ -192,5 +249,5 @@ public class database {
                 }
             }
         }
-    }
+    }*/
 }
