@@ -49,7 +49,7 @@ public class database {
     }
     database(){
         try{
-            String PWD = "Parkerparticles1";
+            String PWD = "Terranova_09";
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/institution", "root", PWD);
         }catch(Exception e){
@@ -124,7 +124,7 @@ public class database {
     }
     public Boolean addStudent(int s_id, String sname, String s_role, int std, int fee_left, int fee_paid, int sc_id, String user, String pwd){
        try{
-           pst = con.prepareStatement("insert into student(s_name, s_role, std, fee_left, fee_paid, s_id, sc_id, uname, pwd) values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+           pst = con.prepareStatement("insert into student(s_name, s_role, std, fee_left, fee_paid, s_id, uname, pwd, sc_id) values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
            pst.setString(1, sname);
            pst.setString(2, String.valueOf(s_role));
            pst.setString(3, String.valueOf(std));
@@ -134,19 +134,22 @@ public class database {
            else
                 pst.setString(5, String.valueOf(1));
            pst.setString(6, String.valueOf(s_id));
-           pst.setString(7, String.valueOf(sc_id));
-           pst.setString(8, user);
-           pst.setString(9, pwd);
+           pst.setString(7, user);
+           pst.setString(8, pwd);
+           if(sc_id==0)
+               pst.setNull(9, java.sql.Types.INTEGER);
+           else
+               pst.setString(9,String.valueOf(sc_id));
            pst.executeUpdate();
            return true;
        }catch (Exception e){
            System.out.println("Exception Encountered - " + e);
            return false;
-       }finally {
+       }/* {
         try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
         try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
         try { con.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
-        }
+        }*/
     }
     public Boolean addInstructor(int ins_id, String ins_name, int salary, boolean sal_paid, int d_id, String user, String pwd){
         try{

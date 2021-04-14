@@ -29,6 +29,20 @@ DBSProj/AdminStudList.java
  DBSProj.AdminStudList
  DBSProj.AdminStudList$1
  DBSProj.AdminStudList$2
+DBSProj/HS1.java
+ DBSProj.HS1
+ DBSProj.HS1$1
+ DBSProj.HS1$2
+ DBSProj.HS1$3
+ DBSProj.HS1$4
+DBSProj/Admin.java
+ DBSProj.Admin
+ DBSProj.Admin$1
+ DBSProj.Admin$2
+ DBSProj.Admin$3
+ DBSProj.Admin$4
+ DBSProj.Admin$5
+ DBSProj.Admin$6
 DBSProj/database.java
  DBSProj.database
  DBSProj.database$courses
@@ -39,20 +53,6 @@ DBSProj/AdminAddStud.java
  DBSProj.AdminAddStud$1
  DBSProj.AdminAddStud$2
  DBSProj.AdminAddStud$3
-DBSProj/Admin.java
- DBSProj.Admin
- DBSProj.Admin$1
- DBSProj.Admin$2
- DBSProj.Admin$3
- DBSProj.Admin$4
- DBSProj.Admin$5
- DBSProj.Admin$6
-DBSProj/HS1.java
- DBSProj.HS1
- DBSProj.HS1$1
- DBSProj.HS1$2
- DBSProj.HS1$3
- DBSProj.HS1$4
 DBSProj/Homescreen.java
  DBSProj.Homescreen
  DBSProj.Homescreen$1

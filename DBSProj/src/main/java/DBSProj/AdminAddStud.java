@@ -5,6 +5,8 @@
  */
 package DBSProj;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 /**
  *
  * @author Aswath Vinayak K
@@ -198,7 +200,17 @@ public class AdminAddStud extends javax.swing.JFrame {
         String uname=jTextField8.getText();
         String pwd=jTextField9.getText();
         database d=new database();
-        d.addStudent(sid, sname, srole,std, feeleft, feepaid, scid, uname, pwd);
+        boolean check=d.addStudent(sid, sname, srole,std, feeleft, feepaid, scid, uname, pwd);
+        if(check==true)
+        {
+           showMessageDialog(null, "Added Student!");
+           setVisible(false);
+        }
+        else
+        {
+            showMessageDialog(null, "Error occured while adding!");
+            setVisible(false);
+        }
     }//GEN-LAST:event_jButton1MouseClicked
 
     /**
