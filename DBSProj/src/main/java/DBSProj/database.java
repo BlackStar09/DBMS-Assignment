@@ -49,8 +49,8 @@ public class database {
     }
     database(){
         try{
-            String PWD = "Terranova_09";
-            Class.forName("com.mysql.jdbc.Driver");
+            String PWD = "Parkerparticles1"; //Parkerparticles1 //Terranova_09
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/institution", "root", PWD);
         }catch(Exception e){
             System.out.println(e);
@@ -145,15 +145,16 @@ public class database {
        }catch (Exception e){
            System.out.println("Exception Encountered - " + e);
            return false;
-       }/* {
-        try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
-        try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
-        try { con.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
-        }*/
+       }finally{
+        //try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered (rs) - " + e); }
+        try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered (pst) - " + e); }
+        try { con.close(); } catch (Exception e) { System.out.println("Exception encountered (con) - " + e); }
+        }
     }
-    public Boolean addInstructor(int ins_id, String ins_name, int salary, boolean sal_paid, int d_id, String user, String pwd){
+    //d.addInstructor(ins_id, ins_name, salary, sal_paid, d_id, user, pwd, mgr_id);
+    public Boolean addInstructor(int ins_id, String ins_name, int salary, boolean sal_paid, int d_id, String user, String pwd, int mgr_id){
         try{
-            pst = con.prepareStatement("insert into institution(ins_name, salary, sal_paid, d_id, ins_id, uname, pwd) values(?, ?, ?, ?, ?, ?, ?)");
+            pst = con.prepareStatement("insert into institution(ins_name, salary, sal_paid, d_id, ins_id, uname, pwd, mgr_id) values(?, ?, ?, ?, ?, ?, ?, ?)");
             pst.setString(1, ins_name);
             pst.setString(2, String.valueOf(salary));
             if(sal_paid == true)
@@ -164,15 +165,19 @@ public class database {
             pst.setString(5, String.valueOf(ins_id));
             pst.setString(6, user);
             pst.setString(7, pwd);
+            if(mgr_id == 0)
+                pst.setNull(8, java.sql.Types.INTEGER);
+            else
+                pst.setString(8, String.valueOf(mgr_id));
             pst.executeUpdate();
             return true;
         }catch(Exception e){
             System.out.println("Exception Encountered - " + e);
             return false;
         }finally {
-        try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
-        try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
-        try { con.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
+        //try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
+        try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered (pst) - " + e); }
+        try { con.close(); } catch (Exception e) { System.out.println("Exception encountered (con) - " + e); }
         }
     }
     public List<courses> courseList() throws SQLException{
@@ -287,7 +292,7 @@ public class database {
             //Exception encountered, return -1;
             return -1;
         }finally {
-        try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
+        //try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
         try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
         try { con.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
         }
@@ -324,7 +329,7 @@ public class database {
             System.out.println("Exception Encountered - " + e);
             return -1;
         }finally {
-        try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
+        //try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
         try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
         try { con.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
         }
