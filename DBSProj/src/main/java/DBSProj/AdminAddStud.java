@@ -198,7 +198,7 @@ public class AdminAddStud extends javax.swing.JFrame {
         String uname=jTextField8.getText();
         String pwd=jTextField9.getText();
         database d=new database();
-        d.addStudent(sid, sname, srole,scid, std, feeleft, feepaid);
+        d.addStudent(sid, sname, srole,std, feeleft, feepaid, scid, uname, pwd);
     }//GEN-LAST:event_jButton1MouseClicked
 
     /**
