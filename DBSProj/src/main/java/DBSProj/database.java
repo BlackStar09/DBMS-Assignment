@@ -49,7 +49,7 @@ public class database {
     }
     database(){
         try{
-            String PWD = "Parkerparticles1";
+            String PWD = "Terranova_09";
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/institution", "root", PWD);
         }catch(Exception e){
@@ -70,9 +70,9 @@ public class database {
             //con.close();
             if(rs.next()){
                 if(token=="E")
-                    return rs.getInt("s_id");
-                else if(token=="S")
                     return rs.getInt("emp_id");
+                else if(token=="S")
+                    return rs.getInt("s_id");
                 else
                     return rs.getInt("ins_id");
             }
@@ -124,14 +124,15 @@ public class database {
             return false;
         }
     }
-    public Boolean addStudent(int s_id, String sname, String s_role, int std, int fee_left, boolean fee_paid){
+    public Boolean addStudent(int s_id, String sname, String s_role, int sc_id, int std, int fee_left, int fee_paid){
        try{
-           pst = con.prepareStatement("insert into student(s_name, s_role, std, fee_left, fee_paid, s_id) values(?, ?, ?, ?, ?, ?)");
+           pst = con.prepareStatement("insert into student(s_name, s_role, std, fee_left, fee_paid, s_id, sc_id) values(?, ?, ?, ?, ?, ?, ?)");
            pst.setString(1, sname);
            pst.setString(2, String.valueOf(s_role));
            pst.setString(3, String.valueOf(std));
            pst.setString(4, String.valueOf(fee_left));
-           if(fee_paid == false)
+           pst.setString(7,String.valueOf(sc_id));
+           if(fee_paid == 0)
                 pst.setString(5, String.valueOf(0));
            else
                 pst.setString(5, String.valueOf(1));
@@ -380,8 +381,8 @@ public class database {
                 course_s.add(course);
                 try{ rs2.close(); } catch (Exception e) { System.out.println("Exception Encountered - " + e);}
                 try{ pst2.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e);}
-                return course_s;
             }
+            return course_s;
             
         }catch(Exception e){
             System.out.println("Exception encountered - " + e);

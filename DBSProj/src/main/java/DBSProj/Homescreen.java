@@ -1,4 +1,5 @@
 package DBSProj;
+import static javax.swing.JOptionPane.showMessageDialog;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +16,7 @@ public class Homescreen extends javax.swing.JFrame {
      * Creates new form HomeScreen
      */
     String token;
+    int id;
     public Homescreen(String e) {
         initComponents();
         token=e;
@@ -133,22 +135,30 @@ public class Homescreen extends javax.swing.JFrame {
         String user = jTextField2.getText();
         String pwd = jTextField3.getText();
         database d = new database();
+        id=d.checkLogin(user, pwd, token);
+        if(id==-1)
+        {
+            showMessageDialog(null, "Check username and password!");
+        }
         if(token=="S"){
             if(d.checkLogin(user, pwd, token)!=-1){
                 Students s = new Students();
                 s.setVisible(true);
+                setVisible(false);
             }
         }
         else if(token=="E"){
             if(d.checkLogin(user, pwd, token)!=-1){
                 Teachers s = new Teachers();
                 s.setVisible(true);
+                setVisible(false);
             }
         }
         else if(token=="A"){
             if(d.checkLogin(user, pwd, token)!=-1){
                 Admin s = new Admin();
                 s.setVisible(true);
+                setVisible(false);
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
