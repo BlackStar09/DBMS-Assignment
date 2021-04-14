@@ -2,6 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+    C:/Users/Aswath Vinayak K/Desktop/DBS_Proj/DBSProj/src/main/java/deps  C:/Users/Sanath/Documents/Projects/DBMS-Assignment/DBSProj/src/main/java/deps/
  */
 package DBSProj;
 import java.sql.*;
@@ -49,7 +50,7 @@ public class database {
     }
     database(){
         try{
-            String PWD = "Parkerparticles1"; //Parkerparticles1 //Terranova_09
+            String PWD = "Terranova_09"; //Parkerparticles1 //Terranova_09
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/institution", "root", PWD);
         }catch(Exception e){
@@ -87,10 +88,10 @@ public class database {
         try { con.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
         }
     }
-    public Boolean addCourse(int c_id, String cname, int credits, int sems, int min_std, int year, String days, int ins_id){
+    public Boolean addCourse(int c_id, String cname, int credits, int sems, int min_std, int year, String days, int ins_id, String stTime){
         try{
-            pst = con.prepareStatement("insert into course(c_name, credits, sem, min_std, year, days, c_id) values(?, ?, ?, ?, ?, ?, ?)");
-            PreparedStatement pst2 = con.prepareStatement("select cid from course where cname=?");
+            pst = con.prepareStatement("insert into courses(c_name, credits, sem, min_std, year, days, c_id, st_time) values(?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement pst2 = con.prepareStatement("select c_id from courses where c_name=?");
             pst2.setString(1, cname);
             pst.setString(1, cname);
             pst.setString(2, String.valueOf(credits));
@@ -99,28 +100,29 @@ public class database {
             pst.setString(5, String.valueOf(year));
             pst.setString(6, days);
             pst.setString(7, String.valueOf(c_id));
+            pst.setString(8, stTime);
             pst.executeUpdate();
             rs = pst2.executeQuery();
             int cid = 0;
             if(rs.next())
-                cid = rs.getInt("cid");
-            pst = con.prepareStatement("insert into teaches values(c_id = ?, ins_id = ?, year = ?)");
+                cid = rs.getInt("c_id");
+            pst = con.prepareStatement("insert into teaches(c_id, ins_id, year) values(?, ?, ?)");
             pst.setString(1, String.valueOf(cid));
             pst.setString(2, String.valueOf(ins_id));
             pst.setString(3, String.valueOf(year));
             pst.executeUpdate();
-            con.close();
+            //con.close();
             return true;
         }catch (Exception e){
             System.out.println("Exception Encountered - " + e);
-            try{
-            con.close();
-            }catch(Exception e1){
-                System.out.println("Exception encountered while closing connection - " + e1);
-                return false;
-            }
             return false;
         }
+         finally{
+        //try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered (rs) - " + e); }
+        try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered (pst) - " + e); }
+        try { con.close(); } catch (Exception e) { System.out.println("Exception encountered (con) - " + e); }
+        }
+            
     }
     public Boolean addStudent(int s_id, String sname, String s_role, int std, int fee_left, int fee_paid, int sc_id, String user, String pwd){
        try{
@@ -152,12 +154,12 @@ public class database {
         }
     }
     //d.addInstructor(ins_id, ins_name, salary, sal_paid, d_id, user, pwd, mgr_id);
-    public Boolean addInstructor(int ins_id, String ins_name, int salary, boolean sal_paid, int d_id, String user, String pwd, int mgr_id){
+    public Boolean addInstructor(int ins_id, String ins_name, int salary, int sal_paid, int d_id, String user, String pwd, int mgr_id){
         try{
-            pst = con.prepareStatement("insert into institution(ins_name, salary, sal_paid, d_id, ins_id, uname, pwd, mgr_id) values(?, ?, ?, ?, ?, ?, ?, ?)");
+            pst = con.prepareStatement("insert into instructor(ins_name, salary, sal_paid, d_id, ins_id, uname, pwd, mgr_id) values(?, ?, ?, ?, ?, ?, ?, ?)");
             pst.setString(1, ins_name);
             pst.setString(2, String.valueOf(salary));
-            if(sal_paid == true)
+            if(sal_paid == 1)
                 pst.setString(3, String.valueOf(1));
             else
                 pst.setString(3, String.valueOf(0));

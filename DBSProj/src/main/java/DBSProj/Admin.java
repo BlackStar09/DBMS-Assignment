@@ -64,10 +64,15 @@ public class Admin extends javax.swing.JFrame {
             .addGap(0, 501, Short.MAX_VALUE)
         );
 
-        jButton1.setText("Add Emplyee");
+        jButton1.setText("Add Instructor");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -165,7 +170,7 @@ public class Admin extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        AdminAddEmp a= new AdminAddEmp();
+        AdminAddIns a= new AdminAddIns();
         a.setVisible(true);
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -186,6 +191,10 @@ public class Admin extends javax.swing.JFrame {
         AdminTeacherList e= new AdminTeacherList();
         e.setVisible(true);
     }//GEN-LAST:event_jButton5MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
