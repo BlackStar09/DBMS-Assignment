@@ -134,19 +134,19 @@ public class Homescreen extends javax.swing.JFrame {
         String pwd = jTextField3.getText();
         database d = new database();
         if(token=="S"){
-            if(d.checkLogin(user, pwd, token)==true){
+            if(d.checkLogin(user, pwd, token)!=-1){
                 Students s = new Students();
                 s.setVisible(true);
             }
         }
         else if(token=="E"){
-            if(d.checkLogin(user, pwd, token)==true){
+            if(d.checkLogin(user, pwd, token)!=-1){
                 Teachers s = new Teachers();
                 s.setVisible(true);
             }
         }
         else if(token=="A"){
-            if(d.checkLogin(user, pwd, token)==true){
+            if(d.checkLogin(user, pwd, token)!=-1){
                 Admin s = new Admin();
                 s.setVisible(true);
             }
