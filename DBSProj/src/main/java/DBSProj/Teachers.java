@@ -46,6 +46,11 @@ public class Teachers extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
 
         jButton1.setText("TimeTable");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         jButton2.setText("Grade Course");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -129,6 +134,12 @@ public class Teachers extends javax.swing.JFrame {
         TeacherGradeCourse t= new TeacherGradeCourse();
         t.setVisible(true);
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        TeacherTimeTable t=new TeacherTimeTable(id);
+        t.setVisible(true);
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments

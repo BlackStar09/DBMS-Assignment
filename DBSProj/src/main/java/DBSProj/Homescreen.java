@@ -146,14 +146,14 @@ public class Homescreen extends javax.swing.JFrame {
                 setVisible(false);
             }
         }
-        else if(token=="E"){
+        else if(token=="I"){
             if(d.checkLogin(user, pwd, token)!=-1){
                 Teachers s = new Teachers(id);
                 s.setVisible(true);
                 setVisible(false);
             }
         }
-        else if(token=="A"){
+        else if(token=="E"){
             if(d.checkLogin(user, pwd, token)!=-1){
                 Admin s = new Admin();
                 s.setVisible(true);

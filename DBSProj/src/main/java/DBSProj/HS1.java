@@ -121,14 +121,14 @@ public class HS1 extends javax.swing.JFrame {
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
         setVisible(false);
-        Homescreen h=new Homescreen("E");
+        Homescreen h=new Homescreen("I");
         h.setVisible(true);
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         // TODO add your handling code here:
         setVisible(false);
-        Homescreen h=new Homescreen("A");
+        Homescreen h=new Homescreen("E");
         h.setVisible(true);
     }//GEN-LAST:event_jButton3MouseClicked
 

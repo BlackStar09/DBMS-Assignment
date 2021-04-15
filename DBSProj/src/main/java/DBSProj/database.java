@@ -448,19 +448,23 @@ public class database {
             rs = pst.executeQuery();
             while(rs.next()){
                 courses course = new courses();
-                PreparedStatement pst2 = con.prepareStatement("select * from courses where c_id = ?");
+                PreparedStatement pst2 = con.prepareStatement("select * from courses where c_id = ? and year=?");
                 int c_hold = rs.getInt("c_id");
                 pst2.setString(1, String.valueOf(c_hold));
+                pst2.setString(2, String.valueOf(year));
                 ResultSet rs2 = pst2.executeQuery();
-                course.c_id = rs2.getInt("c_id");
-                course.c_name = rs2.getString("c_name");
-                course.credits = rs2.getInt("credits");
-                course.days = rs2.getString("days");
-                course.min_std = rs2.getInt("min_std");
-                course.sem = rs2.getInt("sem");
-                course.st_time = rs2.getString("st_time");
-                course.year = rs2.getInt("year");
-                course_s.add(course);
+                if(rs2.next())
+                {
+                    course.c_id = rs2.getInt("c_id");
+                    course.c_name = rs2.getString("c_name");
+                    course.credits = rs2.getInt("credits");
+                    course.days = rs2.getString("days");
+                    course.min_std = rs2.getInt("min_std");
+                    course.sem = rs2.getInt("sem");
+                    course.st_time = rs2.getString("st_time");
+                    course.year = rs2.getInt("year");
+                    course_s.add(course);
+                }
                 try{ rs2.close(); } catch (Exception e) { System.out.println("Exception Encountered - " + e);}
                 try{ pst2.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e);}
             }
