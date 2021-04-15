@@ -463,4 +463,55 @@ public class database {
         try { con.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
         }
     }
+    public Boolean payFee(int s_id, String token){
+        if(token == "PAID"){
+            try{
+              pst = con.prepareStatement("Update student set fee_paid=1 where s_id=?");
+              pst.setString(1, String.valueOf(s_id));
+              pst.executeUpdate();
+              return true;
+            }catch(Exception e){
+                System.out.println("Exception encountered - "+ e);
+                return false;
+            }finally {
+            //try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
+            try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered (pst) - " + e); }
+            try { con.close(); } catch (Exception e) { System.out.println("Exception encountered (con) - " + e); }
+            }
+        }
+        return false;
+    }
+    public Boolean gradeStudent(int s_id, int c_id, int year, int grade){
+        try{
+            pst = con.prepareStatement("Update has_taken set grade=? where s_id=? and c_id=? and year=?");
+            pst.setString(1, String.valueOf(grade));
+            pst.setString(2, String.valueOf(s_id));
+            pst.setString(3, String.valueOf(c_id));
+            pst.setString(4, String.valueOf(year));
+            pst.executeUpdate();
+            return true;
+        }catch(Exception e){
+            System.out.println("Exception Encountered - " + e);
+            return false;
+        }finally {
+        //try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
+        try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered (pst) - " + e); }
+        try { con.close(); } catch (Exception e) { System.out.println("Exception encountered (con) - " + e); }
+        }
+    }
+    public Boolean paySal(int ins_id){
+        try{
+            pst = con.prepareStatement("Update instructor set sal_paid=1 where ins_id=?");
+            pst.setString(1, String.valueOf(ins_id));
+            pst.executeUpdate();
+            return true;
+        }catch(Exception e){
+            System.out.println("Exception Encountered - " + e);
+            return false;
+        }finally {
+        //try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
+        try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered (pst) - " + e); }
+        try { con.close(); } catch (Exception e) { System.out.println("Exception encountered (con) - " + e); }
+        }
+    }
 }
