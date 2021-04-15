@@ -20,6 +20,7 @@ public class Homescreen extends javax.swing.JFrame {
     public Homescreen(String e) {
         initComponents();
         token=e;
+        
     }
 
     /**
@@ -130,7 +131,8 @@ public class Homescreen extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String user = jTextField2.getText();
-        String pwd = jPasswordField1.toString();
+        String pwd = jPasswordField1.getText();
+        System.out.println(pwd);
         database d = new database();
         id=d.checkLogin(user, pwd, token);
         if(id==-1)
@@ -139,14 +141,14 @@ public class Homescreen extends javax.swing.JFrame {
         }
         if(token=="S"){
             if(d.checkLogin(user, pwd, token)!=-1){
-                Students s = new Students();
+                Students s = new Students(id);
                 s.setVisible(true);
                 setVisible(false);
             }
         }
         else if(token=="E"){
             if(d.checkLogin(user, pwd, token)!=-1){
-                Teachers s = new Teachers();
+                Teachers s = new Teachers(id);
                 s.setVisible(true);
                 setVisible(false);
             }

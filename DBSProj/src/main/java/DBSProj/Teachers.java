@@ -14,8 +14,10 @@ public class Teachers extends javax.swing.JFrame {
     /**
      * Creates new form Teachers
      */
-    public Teachers() {
+    int id;
+    public Teachers(int tid) {
         initComponents();
+        id=tid;
     }
 
     /**
@@ -46,6 +48,11 @@ public class Teachers extends javax.swing.JFrame {
         jButton1.setText("TimeTable");
 
         jButton2.setText("Grade Course");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
         jButton3.setText("Course List");
 
@@ -117,6 +124,12 @@ public class Teachers extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        TeacherGradeCourse t= new TeacherGradeCourse();
+        t.setVisible(true);
+    }//GEN-LAST:event_jButton2MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -147,7 +160,7 @@ public class Teachers extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Teachers().setVisible(true);
+                new Teachers(0).setVisible(true);
             }
         });
     }

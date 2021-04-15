@@ -44,7 +44,7 @@ public class AdminAddDept extends javax.swing.JFrame {
         jLabel1.setText("Dept ID:");
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Course Name:");
+        jLabel2.setText("Department Name:");
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,6 +124,17 @@ public class AdminAddDept extends javax.swing.JFrame {
         int cid=Integer.parseInt(jTextField1.getText());
         String cname=jTextField2.getText();
         database d=new database();
+        boolean check=d.addDept(cid,cname);
+        if(check==true)
+        {
+           showMessageDialog(null, "Added Department!");
+           setVisible(false);
+        }
+        else
+        {
+            showMessageDialog(null, "Error occured while adding!");
+            setVisible(false);
+        }
         setVisible(false);
     }//GEN-LAST:event_jButton1MouseClicked
 

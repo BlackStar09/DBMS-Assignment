@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package DBSProj;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,6 +19,21 @@ public class AdminStudList extends javax.swing.JFrame {
      */
     public AdminStudList() {
         initComponents();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        database d=new database();
+        List<database.student> list=d.studentList();
+        for(int i=0;i<list.size();i++)
+        {
+            int sid=list.get(i).s_id;
+            String sname=list.get(i).s_name;
+            String srole=list.get(i).s_role;
+            int std=list.get(i).std;
+            int feeleft=list.get(i).fee_left;
+            int feepaid=list.get(i).fee_paid;
+            int scid=list.get(i).sc_id;
+            model.addRow(new Object[]{sid,sname,srole,std,feeleft,feepaid,scid});
+        }
     }
 
     /**
@@ -38,10 +56,7 @@ public class AdminStudList extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Student ID", "Student Name", "Student Role", "Standard", "Fee Left", "Fee Paid", "SC ID"
@@ -73,8 +88,8 @@ public class AdminStudList extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(337, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

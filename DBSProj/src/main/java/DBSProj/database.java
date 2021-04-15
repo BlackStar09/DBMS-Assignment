@@ -83,6 +83,7 @@ public class database {
             pst.setString(2, pwd);
             rs = pst.executeQuery();
             //con.close();
+            System.out.println(token+" "+uname+" "+pwd);
             if(rs.next()){
                 if(token=="E")
                     return rs.getInt("emp_id");
@@ -96,11 +97,11 @@ public class database {
         }catch(Exception e){
             System.out.println("Error while validating - " + e);
             return -1;
-        }finally {
+        }/*finally {
         try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
         try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
         try { con.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
-        }
+        }*/
     }
     public Boolean addCourse(int c_id, String cname, int credits, int sems, int min_std, int year, String days, int ins_id, String stTime){
         try{
@@ -197,9 +198,9 @@ public class database {
         }
     }
     
-    public Boolean addEmployee(int emp_id, String emp_name, String emp_role, int salary, int sal_paid, int d_id, String uname, String pwd){
+    public Boolean addEmployee(int emp_id, String emp_name, String emp_role, int salary, int sal_paid, int d_id, String uname, String pwd, int mgrid){
         try{
-            pst = con.prepareStatement("insert into employee(emp_id, emp_name, emp_role, salary, sal_paid, d_id, uname, pwd) values (?, ?, ?, ?, ?, ?, ?, ?)");
+            pst = con.prepareStatement("insert into employee(emp_id, emp_name, emp_role, salary, sal_paid, d_id, uname, pwd, mgr_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             pst.setString(1, String.valueOf(emp_id));
             pst.setString(2, emp_name);
             pst.setString(3, emp_role);
@@ -207,7 +208,11 @@ public class database {
             pst.setString(5, String.valueOf(sal_paid));
             pst.setString(6, String.valueOf(d_id));
             pst.setString(7, uname);
-            pst.setString(6, pwd);
+            pst.setString(8, pwd);
+            if(mgrid == 0)
+                pst.setNull(9, java.sql.Types.INTEGER);
+            else
+                pst.setString(9, String.valueOf(mgrid));
             pst.executeUpdate();
             return true;
         }catch(Exception e){
@@ -263,7 +268,7 @@ public class database {
         }
         return courser;
     }
-    public List<student> studentList() throws SQLException{
+    public List<student> studentList() {
         List<student> students = new ArrayList<student>();
         try{
             pst = con.prepareStatement("select * from student");
@@ -276,6 +281,7 @@ public class database {
                 stud.std = rs.getInt("std");
                 stud.fee_left = rs.getInt("fee_left");
                 stud.fee_paid = rs.getInt("fee_paid");
+                stud.sc_id = rs.getInt("sc_id");
                 students.add(stud);
             }
         }catch (Exception e){
@@ -288,7 +294,7 @@ public class database {
         }
         return students;
     }
-    public List<instructor> instructorList() throws SQLException{
+    public List<instructor> instructorList(){
         List<instructor> instructs = new ArrayList<instructor>();
         try{
             pst = con.prepareStatement("select * from instructor");
@@ -300,7 +306,7 @@ public class database {
                 instruct.mgr_id = rs.getInt("mgr_id");
                 instruct.salary = rs.getInt("salary");
                 instruct.sal_paid = rs.getInt("sal_paid");
-                instruct.sal_paid = rs.getInt("d_id");
+                instruct.d_id = rs.getInt("d_id");
                 instructs.add(instruct);
                 }
             }catch (Exception e){
@@ -354,7 +360,7 @@ public class database {
         try { con.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
         }
     }
-     /*Returns -1, 1, 2, 3 depending on which error is met. If everything works fine, it returns 1*/
+     /*Returns -1, 1, 2, 3 depending on which error is met. If everything works fine, it returns 1, not req*/
     public int insaddCourse(int c_id, int ins_id, int year){
         try{
             pst = con.prepareStatement("select c_id, year from teaches where ins_id = ?");
@@ -401,19 +407,24 @@ public class database {
             rs = pst.executeQuery();
             while(rs.next()){
                 courses course = new courses();
-                PreparedStatement pst2 = con.prepareStatement("select * from courses where c_id = ?");
+                PreparedStatement pst2 = con.prepareStatement("select * from courses where c_id = ? and year=?");
                 int c_hold = rs.getInt("c_id");
                 pst2.setString(1, String.valueOf(c_hold));
+                pst2.setString(2, String.valueOf(year));
                 ResultSet rs2 = pst2.executeQuery();
-                course.c_id = rs2.getInt("c_id");
-                course.c_name = rs2.getString("c_name");
-                course.credits = rs2.getInt("credits");
-                course.days = rs2.getString("days");
-                course.min_std = rs2.getInt("min_std");
-                course.sem = rs2.getInt("sem");
-                course.st_time = rs2.getString("st_time");
-                course.year = rs2.getInt("year");
-                course_s.add(course);
+                if(rs2.next())
+                {
+                    course.c_id = rs2.getInt("c_id");
+                    course.c_name = rs2.getString("c_name");
+                    course.credits = rs2.getInt("credits");
+                    course.days = rs2.getString("days");
+                    course.min_std = rs2.getInt("min_std");
+                    course.sem = rs2.getInt("sem");
+                    course.st_time = rs2.getString("st_time");
+                    course.year = rs2.getInt("year");
+                    course_s.add(course);
+                    System.out.println(course.days+" "+course.c_id);
+                }
                 try{ rs2.close(); } catch (Exception e) { System.out.println("Exception Encountered - " + e);}
                 try{ pst2.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e);}
             }
@@ -421,11 +432,11 @@ public class database {
         }catch(Exception e){
             System.out.println("Exception encountered - " + e);
             return null;
-        }finally {
+        }/*finally {
         try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
         try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
         try { con.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
-        }
+        }*/
         return course_s;
     }
     public List<courses> teachesCoursesTT(int ins_id, int year){

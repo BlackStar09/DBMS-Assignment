@@ -14,9 +14,10 @@ public class Students extends javax.swing.JFrame {
     /**
      * Creates new form Teachers
      */
-    public Students() {
+    int id;
+    public Students(int sid) {
         initComponents();
-        
+        id=sid;
     }
 
     /**
@@ -56,6 +57,11 @@ public class Students extends javax.swing.JFrame {
         );
 
         jButton1.setText("TimeTable");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -129,6 +135,12 @@ public class Students extends javax.swing.JFrame {
         s.setVisible(true);
     }//GEN-LAST:event_jButton2MouseClicked
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        StudentTimeTable s=new StudentTimeTable(id);
+        s.setVisible(true);
+    }//GEN-LAST:event_jButton1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -160,7 +172,7 @@ public class Students extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Students().setVisible(true);
+                new Students(0).setVisible(true);
             }
         });
     }
