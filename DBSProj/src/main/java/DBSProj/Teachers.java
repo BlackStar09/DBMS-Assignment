@@ -60,6 +60,11 @@ public class Teachers extends javax.swing.JFrame {
         });
 
         jButton3.setText("Course List");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -140,6 +145,12 @@ public class Teachers extends javax.swing.JFrame {
         TeacherTimeTable t=new TeacherTimeTable(id);
         t.setVisible(true);
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+        TeacherCourseList t= new TeacherCourseList(id);
+        t.setVisible(true);
+    }//GEN-LAST:event_jButton3MouseClicked
 
     /**
      * @param args the command line arguments
