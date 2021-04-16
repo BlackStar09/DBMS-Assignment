@@ -64,7 +64,7 @@ public class database {
     }
     database(){
         try{
-            String PWD = "Parkerparticles1"; //Parkerparticles1 //Terranova_09
+            String PWD = "Terranova_09"; //Parkerparticles1 //Terranova_09
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/institution", "root", PWD);
         }catch(Exception e){
@@ -242,7 +242,7 @@ public class database {
         }
     }
     
-    public List<courses> courseList() throws SQLException{
+    public List<courses> courseList(){
         List<courses> courser = new ArrayList<courses>();
         try{
             pst = con.prepareStatement("select * from courses");
