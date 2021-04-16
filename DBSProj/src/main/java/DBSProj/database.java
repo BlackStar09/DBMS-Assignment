@@ -601,4 +601,65 @@ public class database {
         try { con.close(); } catch (Exception e) { System.out.println("Exception encountered (con) - " + e); }
         }
     }
+    public Boolean deleteStudent(int s_id){
+        try{
+            pst = con.prepareStatement("Delete from student where s_id=?");
+            pst.setString(1, String.valueOf(s_id));
+            pst.executeUpdate();
+            return true;
+        }catch(Exception e){
+            System.out.println("Exception Encountered - " + e);
+            return false;
+        }finally {
+        //try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
+        try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered (pst) - " + e); }
+        try { con.close(); } catch (Exception e) { System.out.println("Exception encountered (con) - " + e); }
+        }
+    }
+    public Boolean deleteIns(int ins_id){
+        try{
+            pst = con.prepareStatement("delete from instructor where ins_id=?");
+            pst.setString(1, String.valueOf(ins_id));
+            pst.executeUpdate();
+            return true;
+        }catch (Exception e){
+            System.out.println("Exception Encountered - " + e);
+            return false;
+        }finally{
+        //try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
+        try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered (pst) - " + e); }
+        try { con.close(); } catch (Exception e) { System.out.println("Exception encountered (con) - " + e); }
+        }
+    }
+    public float gpaCalc(int s_id){
+        float gpa = 0;
+        try{
+            pst = con.prepareStatement("select * from has_taken where s_id = ?");
+            pst.setString(1, String.valueOf(s_id));
+            rs = pst.executeQuery();
+            int cred_total = 0;
+            while(rs.next()){
+                int c_hold = rs.getInt("c_id");
+                int g_hold = rs.getInt("grade");
+                int y_hold = rs.getInt("year");
+                PreparedStatement pst2 = con.prepareStatement("select credits from courses where c_id = ? and year = ? order by year desc");
+                pst2.setString(1, String.valueOf(c_hold));
+                pst2.setString(2, String.valueOf(y_hold));
+                ResultSet rs2 = pst2.executeQuery();
+                rs2.next();
+                int cred_hold = rs2.getInt("credits");
+                cred_total += cred_hold;
+                gpa += cred_total * g_hold;
+            }
+            gpa /= cred_total;
+            return gpa;
+        }catch(Exception e){
+            System.out.println("Exception Encountered - " + e);
+            return 0;
+        }finally{
+        try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
+        try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered (pst) - " + e); }
+        try { con.close(); } catch (Exception e) { System.out.println("Exception encountered (con) - " + e); }
+        }
+    }
 }
