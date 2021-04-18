@@ -281,7 +281,7 @@ public class Students extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
-        StudAddCourse s=new StudAddCourse();
+        StudAddCourse s=new StudAddCourse(id);
         s.setVisible(true);
     }//GEN-LAST:event_jButton2MouseClicked
 
@@ -313,6 +313,8 @@ public class Students extends javax.swing.JFrame {
 
     private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
         // TODO add your handling code here:
+        StudCourseList s = new StudCourseList(id);
+        s.setVisible(true);
     }//GEN-LAST:event_jButton7MouseClicked
 
     /**

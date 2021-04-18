@@ -49,7 +49,7 @@ public class TeacherGradeCourse extends javax.swing.JFrame {
         jLabel1.setText("Student ID:");
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Course Name:");
+        jLabel2.setText("Course ID:");
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

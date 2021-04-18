@@ -64,7 +64,7 @@ public class database {
     }
     database(){
         try{
-            String PWD = "Terranova_09"; //Parkerparticles1 //Terranova_09
+            String PWD = "Parkerparticles1"; //Parkerparticles1 //Terranova_09
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/institution", "root", PWD);
         }catch(Exception e){
@@ -103,6 +103,44 @@ public class database {
         try { con.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
         }*/
     }
+    
+    public int insaddCourse(int c_id, int ins_id, int year){
+        try{
+            pst = con.prepareStatement("select c_id, year from teaches where ins_id = ?");
+            rs = pst.executeQuery();
+            PreparedStatement pst2 = con.prepareStatement("select * from courses c1, courses c2 where c1.c_id = ? and c2.c_id=? and c1.year = ? and c2.year = ? and c1.st_time = c2.st_time and c1.days = c2.days");
+            pst2.setString(1, String.valueOf(c_id));
+            pst2.setString(3, String.valueOf(year));
+            while(rs.next()){
+                int c_hold = rs.getInt("c_id");
+                int y_hold = rs.getInt("year");
+                pst2.setString(2, String.valueOf(c_hold));
+                pst2.setString(4, String.valueOf(y_hold));
+                if(c_id == c_hold && year == y_hold){
+                    return 2;
+                }
+                ResultSet rs2;
+                rs2 = pst2.executeQuery();
+                if(rs2.next()){
+                    return 3;
+                }
+            }
+            pst = con.prepareStatement("insert into teaches(c_id, ins_id, year) values(?, ?, ?)");
+            pst.setString(1, String.valueOf(c_id));
+            pst.setString(2, String.valueOf(ins_id));
+            pst.setString(3, String.valueOf(year));
+            pst.executeUpdate();
+            return 1;
+        }catch (Exception e){
+            System.out.println("Exception Encountered (iac)- " + e);
+            return -1;
+        }finally {
+        //try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
+        try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered (iac)- " + e); }
+        try { con.close(); } catch (Exception e) { System.out.println("Exception encountered (iac)- " + e); }
+        }
+ 
+    }
     public Boolean addCourse(int c_id, String cname, int credits, int sems, int min_std, int year, String days, int ins_id, String stTime){
         try{
             pst = con.prepareStatement("insert into courses(c_name, credits, sem, min_std, year, days, c_id, st_time) values(?, ?, ?, ?, ?, ?, ?, ?)");
@@ -126,8 +164,9 @@ public class database {
             pst.setString(2, String.valueOf(ins_id));
             pst.setString(3, String.valueOf(year));
             pst.executeUpdate();
-            //con.close();
             return true;
+            //con.close();
+        
         }catch (Exception e){
             System.out.println("Exception Encountered - " + e);
             return false;
@@ -137,7 +176,6 @@ public class database {
         try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered (pst) - " + e); }
         try { con.close(); } catch (Exception e) { System.out.println("Exception encountered (con) - " + e); }
         }
-            
     }
     public Boolean addStudent(int s_id, String sname, String s_role, int std, int fee_left, int fee_paid, int sc_id, String user, String pwd){
        try{
@@ -361,43 +399,7 @@ public class database {
         }
     }
      /*Returns -1, 1, 2, 3 depending on which error is met. If everything works fine, it returns 1, not req*/
-    public int insaddCourse(int c_id, int ins_id, int year){
-        try{
-            pst = con.prepareStatement("select c_id, year from teaches where ins_id = ?");
-            rs = pst.executeQuery();
-            PreparedStatement pst2 = con.prepareStatement("select * from courses c1, courses c2 where c1.c_id = ? and c2.c_id=? and c1.year = ? and c2.year = ? and c1.c_id = c2.c_id and c1.year = c2.year and c1");
-            pst2.setString(1, String.valueOf(c_id));
-            pst2.setString(3, String.valueOf(year));
-            while(rs.next()){
-                int c_hold = rs.getInt("c_id");
-                int y_hold = rs.getInt("year");
-                pst2.setString(2, String.valueOf(c_hold));
-                pst2.setString(4, String.valueOf(y_hold));
-                if(c_id == c_hold && year == y_hold){
-                    return 2;
-                }
-                ResultSet rs2;
-                rs2 = pst2.executeQuery();
-                if(rs2.next()){
-                    return 3;
-                }
-            }
-            pst = con.prepareStatement("insert into teaches(c_id, ins_id, year) values(?, ?, ?)");
-            pst.setString(1, String.valueOf(c_id));
-            pst.setString(2, String.valueOf(ins_id));
-            pst.setString(3, String.valueOf(year));
-            pst.executeUpdate();
-            return 1;
-        }catch (Exception e){
-            System.out.println("Exception Encountered - " + e);
-            return -1;
-        }finally {
-        //try { rs.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
-        try { pst.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
-        try { con.close(); } catch (Exception e) { System.out.println("Exception encountered - " + e); }
-        }
- 
-    }
+    
     public List<courses> studCoursesTT(int s_id, int year){
         List<courses> course_s = new ArrayList<courses>();
         try{
@@ -407,7 +409,7 @@ public class database {
             rs = pst.executeQuery();
             while(rs.next()){
                 courses course = new courses();
-                PreparedStatement pst2 = con.prepareStatement("select * from courses where c_id = ? and year=?");
+                PreparedStatement pst2 = con.prepareStatement("select * from courses where c_id = ? and year=? and sem=2");
                 int c_hold = rs.getInt("c_id");
                 pst2.setString(1, String.valueOf(c_hold));
                 pst2.setString(2, String.valueOf(year));
@@ -448,7 +450,7 @@ public class database {
             rs = pst.executeQuery();
             while(rs.next()){
                 courses course = new courses();
-                PreparedStatement pst2 = con.prepareStatement("select * from courses where c_id = ? and year=?");
+                PreparedStatement pst2 = con.prepareStatement("select * from courses where c_id = ? and year=? and sem=2");
                 int c_hold = rs.getInt("c_id");
                 pst2.setString(1, String.valueOf(c_hold));
                 pst2.setString(2, String.valueOf(year));
@@ -503,8 +505,12 @@ public class database {
             pst.setString(2, String.valueOf(s_id));
             pst.setString(3, String.valueOf(c_id));
             pst.setString(4, String.valueOf(year));
-            pst.executeUpdate();
-            return true;
+            int n = pst.executeUpdate();
+            System.out.println(n);
+            if(n>0)
+                return true;
+            else
+                return false;
         }catch(Exception e){
             System.out.println("Exception Encountered - " + e);
             return false;
@@ -605,8 +611,11 @@ public class database {
         try{
             pst = con.prepareStatement("Delete from student where s_id=?");
             pst.setString(1, String.valueOf(s_id));
-            pst.executeUpdate();
-            return true;
+            int x = pst.executeUpdate();
+            if(x>0)
+                return true;
+            else
+                return false;
         }catch(Exception e){
             System.out.println("Exception Encountered - " + e);
             return false;
@@ -620,8 +629,11 @@ public class database {
         try{
             pst = con.prepareStatement("delete from instructor where ins_id=?");
             pst.setString(1, String.valueOf(ins_id));
-            pst.executeUpdate();
-            return true;
+            int x = pst.executeUpdate();
+            if(x>0)
+                return true;
+            else
+                return false;
         }catch (Exception e){
             System.out.println("Exception Encountered - " + e);
             return false;
@@ -648,9 +660,13 @@ public class database {
                 ResultSet rs2 = pst2.executeQuery();
                 rs2.next();
                 int cred_hold = rs2.getInt("credits");
+                System.out.println(c_hold + " " + " " + g_hold + " " +  y_hold +" " +cred_hold);
+                if(g_hold == 0)
+                   continue;
                 cred_total += cred_hold;
-                gpa += cred_total * g_hold;
+                gpa += cred_hold * g_hold;
             }
+            System.out.println(cred_total);
             gpa /= cred_total;
             return gpa;
         }catch(Exception e){
