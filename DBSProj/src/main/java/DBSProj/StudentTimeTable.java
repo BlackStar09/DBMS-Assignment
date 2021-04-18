@@ -25,7 +25,7 @@ public class StudentTimeTable extends javax.swing.JFrame {
         id=sid;
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         database d=new database();
-        List <database.courses> list=d.studCoursesTT(id, 2009);
+        List <database.courses> list=d.studCoursesTT(id, 2021);
         for(int i=0;i<list.size();i++)
         {
             String day=list.get(i).days;
